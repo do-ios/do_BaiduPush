@@ -1,0 +1,75 @@
+{
+  "ID": "do_BaiduPush",
+  "IsContainer": "0",
+  "Type": "SM",
+  "Name": "百度云推送",
+  "Version": "Internal",
+  "Description": "百度云推送",
+  "Icon": "",
+  "IOS": {
+    "Support": 1,
+    "MinVersion": "7"
+  },
+  "Android": {
+    "Support": 1,
+    "MinVersion": "14"
+  },
+  "Windows": {
+    "Support": 0,
+    "MinVersion": ""
+  },
+  "WindowsPhone": {
+    "Support": 0,
+    "MinVersion": ""
+  },
+  "Html": {
+    "Support": 1,
+    "MinVersion": "5.0"
+  },
+  "Properties": [],
+  "Events": [
+    {
+      "ID": "bind",
+      "Description": "获取绑定请求的结果，需要注册在app.js或app.lua",
+      "ReturnType": "String",
+      "ReturnDesc": "{errorCode:\"绑定接口返回值，0-成功\",appId:\"\",userId:\"\",channelId:\"\"}"
+    },
+    {
+      "ID": "message",
+      "Description": "接收透传消息触发，需要注册在app.js或app.lua",
+      "ReturnType": "String",
+      "ReturnDesc": "{\"message\":\"推送的消息\",customContent:\"自定义内容，为空或者json字符串\"}"
+    },
+    {
+      "ID": "notificationClicked",
+      "Description": "接收通知点击触发，需要注册在app.js或app.lua",
+      "ReturnType": "String",
+      "ReturnDesc": "{title:\"推送的通知的标题\",\"description\":\"推送的通知的描述\",customContent:\"自定义内容，为空或者json字符串\"}"
+    },
+    {
+      "ID": "unbind",
+      "Description": "获取解除绑定请求的结果，需要注册在app.js或app.lua",
+      "ReturnType": "String",
+      "ReturnDesc": "{errorCode:\"错误码。0表示从云推送解绑定成功；非0表示失败\"}"
+    }
+  ],
+  "syncMethodes": [
+    {
+      "ID": "startWork",
+      "Name": "Push服务初始化及绑定",
+      "Description": "完成Push服务的初始化，并自动完成（触发）bind工作",
+      "ReturnType": "",
+      "ReturnDesc": "",
+      "Paras": []
+    },
+    {
+      "ID": "stopWork",
+      "Name": "停止Push服务",
+      "Description": "停止本应用Push服务进程，并自动完成（触发）unbind工作",
+      "ReturnType": "",
+      "ReturnDesc": "",
+      "Paras": []
+    }
+  ],
+  "asyncMethodes": []
+}
