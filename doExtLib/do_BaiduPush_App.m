@@ -10,6 +10,8 @@
 #import "BPush.h"
 #import "doScriptEngineHelper.h"
 #import "do_BaiduPush_SM.h"
+#import "doServiceContainer.h"
+#import "doIModuleExtManage.h"
 
 static do_BaiduPush_App * instance;
 @implementation do_BaiduPush_App
@@ -33,7 +35,8 @@ static do_BaiduPush_App * instance;
         UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
     }
-    [BPush registerChannel:launchOptions apiKey:@"l3Giqml0em44oTCCIeVS14Ip" pushMode:BPushModeDevelopment isDebug:YES];
+    NSString *baiduKey = [[doServiceContainer Instance].ModuleExtManage GetThirdAppKey:@"BaiduPush.plist" :@"BaiduPushKey"];
+    [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeProduction isDebug:NO];
     NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     [BPush setDelegate:(id<BPushDelegate>)[doScriptEngineHelper ParseSingletonModule:nil :@"do_BaiduPush"]];
     if (userInfo) {
