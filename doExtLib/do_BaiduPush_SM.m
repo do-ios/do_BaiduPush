@@ -54,6 +54,7 @@
 //同步
 - (void)startWork:(NSArray *)parms
 {
+    [BPush setDelegate:self];
     _invokeResult = [parms objectAtIndex:2];
     //自己的代码实现
     do_BaiduPush_App *baiduApp = [do_BaiduPush_App Instance];

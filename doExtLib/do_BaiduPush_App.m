@@ -38,7 +38,6 @@ static do_BaiduPush_App * instance;
     NSString *baiduKey = [[doServiceContainer Instance].ModuleExtManage GetThirdAppKey:@"BaiduPush.plist" :@"BaiduPushKey"];
     [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeProduction isDebug:NO];
     NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-    [BPush setDelegate:(id<BPushDelegate>)[doScriptEngineHelper ParseSingletonModule:nil :@"do_BaiduPush"]];
     if (userInfo) {
         [BPush handleNotification:userInfo];
     }
