@@ -68,9 +68,6 @@
 		3BB52A221B147D4E00C2FC9A /* do_BaiduPush_SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = do_BaiduPush_SM.h; sourceTree = "<group>"; };
 		3BB52A231B147D4E00C2FC9A /* do_BaiduPush_SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = do_BaiduPush_SM.m; sourceTree = "<group>"; };
 		3BB52A271B147DDA00C2FC9A /* BPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPush.h; sourceTree = "<group>"; };
-		3BB52A281B147DDA00C2FC9A /* do_Label_IView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = do_Label_IView.h; sourceTree = "<group>"; };
-		3BB52A291B147DDA00C2FC9A /* do_Label_UIModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = do_Label_UIModel.h; sourceTree = "<group>"; };
-		3BB52A2A1B147DDA00C2FC9A /* do_Label_UIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = do_Label_UIView.h; sourceTree = "<group>"; };
 		3BB52A2B1B147DDA00C2FC9A /* libBPush.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBPush.a; sourceTree = "<group>"; };
 		A44BC66A1AEE005E001580AA /* Do_Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Do_Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A44BC66E1AEE005E001580AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -227,9 +224,6 @@
 			isa = PBXGroup;
 			children = (
 				3BB52A271B147DDA00C2FC9A /* BPush.h */,
-				3BB52A281B147DDA00C2FC9A /* do_Label_IView.h */,
-				3BB52A291B147DDA00C2FC9A /* do_Label_UIModel.h */,
-				3BB52A2A1B147DDA00C2FC9A /* do_Label_UIView.h */,
 				3BB52A2B1B147DDA00C2FC9A /* libBPush.a */,
 			);
 			path = LibBPush;

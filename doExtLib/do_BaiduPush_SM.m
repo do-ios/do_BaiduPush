@@ -96,19 +96,17 @@
     else if ([method isEqualToString:@"unbind"])
     {
         [resultDict removeAllObjects];
-        [resultDict setValue:[data valueForKey:@"error_code"] forKey:BPushRequestErrorCodeKey];
-        NSString *resultStr = [doJsonHelper ExportToText:resultDict :YES];
-        if (resultStr.length <= 0)
-        {
+        long errorStr = (long)[data valueForKey:@"errorCode"];
+        if (errorStr == 0) {
             [resultDict setValue:@"0" forKey:@"errorCode"];
-            [_invokeResult SetResultNode:resultDict];
         }
         else
         {
-            [_invokeResult SetResultText:resultStr];
+            [resultDict setValue:[data valueForKey:BPushRequestErrorCodeKey] forKey:@"errorCode"];
         }
+        NSString *resultStr = [doJsonHelper ExportToText:resultDict :YES];
+        [_invokeResult SetResultText:resultStr];
         [self.EventCenter FireEvent:@"unbind" :_invokeResult];
-        return;
     }
     
 }
