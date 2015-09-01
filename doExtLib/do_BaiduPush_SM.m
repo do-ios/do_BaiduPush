@@ -114,6 +114,24 @@
 - (void)didReceiveNotification:(NSDictionary *)userInfo
 {
     NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
+    NSString *description = [userInfo objectForKey:@"aps"];
+    NSString *customContent;
+    NSMutableDictionary *customDict = [NSMutableDictionary dictionary];
+    for (NSString *infoKey in userInfo) {
+        if (![infoKey isEqualToString:@"aps"]) {
+            [customDict setValue:[userInfo valueForKey:infoKey] forKey:infoKey];
+        }
+    }
+    customContent = [doJsonHelper ExportToText:customDict :YES];
+    [resultDict setValue:description forKey:@"message"];
+    [resultDict setValue:customContent forKey:@"customContent"];
+    customContent = [doJsonHelper ExportToText:resultDict :YES];
+    [_invokeResult SetResultText:customContent];
+    [self.EventCenter FireEvent:@"message" :_invokeResult];
+}
+- (void)didLaunchFromRemoteNotification:(NSDictionary *)userInfo
+{
+    NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
     NSDictionary *dicInfo = [[NSBundle mainBundle] infoDictionary];
     NSString *strAppName = [dicInfo objectForKey:@"CFBundleDisplayName"];
     NSString *title = strAppName;
@@ -132,13 +150,24 @@
         [resultDict setValue:customContent forKey:@"customContent"];
     }
     customContent = [doJsonHelper ExportToText:resultDict :YES];
-    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                          NSUserDomainMask, YES);
-    NSString * arrayPath = [[paths objectAtIndex:0]
-                            stringByAppendingPathComponent:@"urldata.txt"];
-    [customContent writeToFile:arrayPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
     [_invokeResult SetResultText:customContent];
     [self.EventCenter FireEvent:@"notificationClicked" :_invokeResult];
 }
-
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

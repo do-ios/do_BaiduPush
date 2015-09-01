@@ -40,6 +40,12 @@ static do_BaiduPush_App * instance;
     NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (userInfo) {
         [BPush handleNotification:userInfo];
+        do_BaiduPush_SM *baidu = (do_BaiduPush_SM*)[doScriptEngineHelper ParseSingletonModule:nil :@"do_BaiduPush" ];
+        [baidu startWork:nil];
+        if ([self.delegate respondsToSelector:@selector(didLaunchFromRemoteNotification:)]) {
+            [self.delegate didLaunchFromRemoteNotification:userInfo];
+        }
+
     }
     
     return YES;

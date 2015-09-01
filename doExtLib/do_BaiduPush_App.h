@@ -14,6 +14,7 @@
 
 @optional
 - (void) didReceiveNotification:(NSDictionary *)userInfo;
+- (void) didLaunchFromRemoteNotification:(NSDictionary *)userInfo;
 @end
 
 @interface do_BaiduPush_App : NSObject<doIAppDelegate>

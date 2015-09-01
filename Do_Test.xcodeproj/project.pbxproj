@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B38B2C11B943DB9009A7B5B /* do_BaiduPush_App.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3BB52A1F1B147D4E00C2FC9A /* do_BaiduPush_App.h */; };
+		3B38B2C21B943DB9009A7B5B /* do_BaiduPush_ISM.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3BB52A211B147D4E00C2FC9A /* do_BaiduPush_ISM.h */; };
+		3B38B2C31B943DB9009A7B5B /* do_BaiduPush_SM.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3BB52A221B147D4E00C2FC9A /* do_BaiduPush_SM.h */; };
 		3BB52A241B147D4E00C2FC9A /* do_BaiduPush_App.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB52A201B147D4E00C2FC9A /* do_BaiduPush_App.m */; };
 		3BB52A251B147D4E00C2FC9A /* do_BaiduPush_SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB52A231B147D4E00C2FC9A /* do_BaiduPush_SM.m */; };
 		3BB52A2C1B147DDA00C2FC9A /* libBPush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BB52A2B1B147DDA00C2FC9A /* libBPush.a */; };
@@ -56,6 +59,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				3B38B2C11B943DB9009A7B5B /* do_BaiduPush_App.h in CopyFiles */,
+				3B38B2C21B943DB9009A7B5B /* do_BaiduPush_ISM.h in CopyFiles */,
+				3B38B2C31B943DB9009A7B5B /* do_BaiduPush_SM.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,7 +95,7 @@
 		A44BC69C1AEE008D001580AA /* doScriptEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = doScriptEngine.m; sourceTree = "<group>"; };
 		A44BC69D1AEE008D001580AA /* doService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = doService.h; sourceTree = "<group>"; };
 		A44BC69E1AEE008D001580AA /* doService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = doService.m; sourceTree = "<group>"; };
-		A44BC7B21AEE19CC001580AA /* libdoExtLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdoExtLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A44BC7B21AEE19CC001580AA /* libbaiduPush.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbaiduPush.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4A1A01C1AF0F82B00D835A5 /* do_Test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = do_Test.json; sourceTree = "<group>"; };
 		CCEB2AC51B09D92A00949C58 /* doModuleExtManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = doModuleExtManage.h; sourceTree = "<group>"; };
 		CCEB2AC61B09D92A00949C58 /* doModuleExtManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = doModuleExtManage.m; sourceTree = "<group>"; };
@@ -244,7 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				A44BC66A1AEE005E001580AA /* Do_Test.app */,
-				A44BC7B21AEE19CC001580AA /* libdoExtLib.a */,
+				A44BC7B21AEE19CC001580AA /* libbaiduPush.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -446,7 +452,7 @@
 			);
 			name = doExtLib;
 			productName = doExtLib;
-			productReference = A44BC7B21AEE19CC001580AA /* libdoExtLib.a */;
+			productReference = A44BC7B21AEE19CC001580AA /* libbaiduPush.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -665,8 +671,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/LibBPush",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = baiduPush;
 				SKIP_INSTALL = YES;
 				SYMROOT = build;
 			};
@@ -680,7 +687,7 @@
 					"$(PROJECT_DIR)/LibBPush",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = baiduPush;
 				SKIP_INSTALL = YES;
 				SYMROOT = build;
 			};
