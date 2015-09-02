@@ -16,7 +16,7 @@
 #import "do_BaiduPush_App.h"
 #import "doJsonHelper.h"
 
-@interface do_BaiduPush_SM ()<BPushDelegate,do_BaiduPush_AppDelegate>
+@interface do_BaiduPush_SM ()<BPushDelegate>
 @property (nonatomic,strong) doInvokeResult *invokeResult;
 @property (nonatomic,copy) NSString *callBackName;
 @property (nonatomic,weak) id<doIScriptEngine> scriptEngine;
@@ -57,8 +57,6 @@
     [BPush setDelegate:self];
     _invokeResult = [parms objectAtIndex:2];
     //自己的代码实现
-    do_BaiduPush_App *baiduApp = [do_BaiduPush_App Instance];
-    baiduApp.delegate = self;
     [BPush bindChannel];
 }
 - (void)stopWork:(NSArray *)parms
@@ -111,48 +109,6 @@
     
 }
 
-- (void)didReceiveNotification:(NSDictionary *)userInfo
-{
-    NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
-    NSString *description = [userInfo objectForKey:@"aps"];
-    NSString *customContent;
-    NSMutableDictionary *customDict = [NSMutableDictionary dictionary];
-    for (NSString *infoKey in userInfo) {
-        if (![infoKey isEqualToString:@"aps"]) {
-            [customDict setValue:[userInfo valueForKey:infoKey] forKey:infoKey];
-        }
-    }
-    customContent = [doJsonHelper ExportToText:customDict :YES];
-    [resultDict setValue:description forKey:@"message"];
-    [resultDict setValue:customContent forKey:@"customContent"];
-    customContent = [doJsonHelper ExportToText:resultDict :YES];
-    [_invokeResult SetResultText:customContent];
-    [self.EventCenter FireEvent:@"message" :_invokeResult];
-}
-- (void)didLaunchFromRemoteNotification:(NSDictionary *)userInfo
-{
-    NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
-    NSDictionary *dicInfo = [[NSBundle mainBundle] infoDictionary];
-    NSString *strAppName = [dicInfo objectForKey:@"CFBundleDisplayName"];
-    NSString *title = strAppName;
-    NSString *description = [userInfo objectForKey:@"aps"];
-    NSString *customContent;
-    NSMutableDictionary *customDict = [NSMutableDictionary dictionary];
-    for (NSString *infoKey in userInfo) {
-        if (![infoKey isEqualToString:@"aps"]) {
-            [customDict setValue:[userInfo valueForKey:infoKey] forKey:infoKey];
-        }
-    }
-    customContent = [doJsonHelper ExportToText:customDict :YES];
-    [resultDict setValue:title forKey:@"title"];
-    [resultDict setValue:description forKey:@"description"];
-    if (customContent.length > 0) {
-        [resultDict setValue:customContent forKey:@"customContent"];
-    }
-    customContent = [doJsonHelper ExportToText:resultDict :YES];
-    [_invokeResult SetResultText:customContent];
-    [self.EventCenter FireEvent:@"notificationClicked" :_invokeResult];
-}
 @end
 
 

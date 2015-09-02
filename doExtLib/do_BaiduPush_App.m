@@ -12,6 +12,7 @@
 #import "do_BaiduPush_SM.h"
 #import "doServiceContainer.h"
 #import "doIModuleExtManage.h"
+#import "doJsonHelper.h"
 
 static do_BaiduPush_App * instance;
 @implementation do_BaiduPush_App
@@ -40,12 +41,7 @@ static do_BaiduPush_App * instance;
     NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (userInfo) {
         [BPush handleNotification:userInfo];
-        do_BaiduPush_SM *baidu = (do_BaiduPush_SM*)[doScriptEngineHelper ParseSingletonModule:nil :@"do_BaiduPush" ];
-        [baidu startWork:nil];
-        if ([self.delegate respondsToSelector:@selector(didLaunchFromRemoteNotification:)]) {
-            [self.delegate didLaunchFromRemoteNotification:userInfo];
-        }
-
+        [self fireEvent:userInfo];
     }
     
     return YES;
@@ -89,22 +85,43 @@ static do_BaiduPush_App * instance;
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    // App 收到推送的通知
-    do_BaiduPush_SM *baidu = (do_BaiduPush_SM*)[doScriptEngineHelper ParseSingletonModule:nil :@"do_BaiduPush" ];
-    [baidu startWork:nil];
-    if ([self.delegate respondsToSelector:@selector(didReceiveNotification:)]) {
-        [self.delegate didReceiveNotification:userInfo];
-    }
+    [self fireEvent:userInfo];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    do_BaiduPush_SM *baidu = (do_BaiduPush_SM*)[doScriptEngineHelper ParseSingletonModule:nil :@"do_BaiduPush" ];
-    [baidu startWork:nil];
-    if ([self.delegate respondsToSelector:@selector(didReceiveNotification:)]) {
-        [self.delegate didReceiveNotification:userInfo];
-    }
+    [self fireEvent:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
+- (void)fireEvent:(NSDictionary *)userInfo
+{
+    UIApplicationState appState = [UIApplication sharedApplication].applicationState;
+    if (appState == UIApplicationStateActive) {
+        return;
+    }
+    do_BaiduPush_SM *baidu = (do_BaiduPush_SM*)[doScriptEngineHelper ParseSingletonModule:nil :@"do_BaiduPush" ];
+    doInvokeResult *resul = [[doInvokeResult alloc]init];
+    NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
+//    NSDictionary *dicInfo = [[NSBundle mainBundle] infoDictionary];
+//    NSString *strAppName = [dicInfo objectForKey:@"CFBundleDisplayName"];
+//    NSString *title = strAppName;
+    NSString *description = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+    NSString *customContent;
+    NSMutableDictionary *customDict = [NSMutableDictionary dictionary];
+    for (NSString *infoKey in userInfo) {
+        if (![infoKey isEqualToString:@"aps"]) {
+            [customDict setValue:[userInfo valueForKey:infoKey] forKey:infoKey];
+        }
+    }
+    customContent = [doJsonHelper ExportToText:customDict :YES];
+    [resultDict setValue:@"" forKey:@"title"];
+    [resultDict setValue:description forKey:@"description"];
+    if (customContent.length > 0) {
+        [resultDict setValue:customContent forKey:@"customContent"];
+    }
+    customContent = [doJsonHelper ExportToText:resultDict :YES];
+    [resul SetResultText:customContent];
+    [baidu.EventCenter FireEvent:@"notificationClicked" :resul];
+}
 @end
