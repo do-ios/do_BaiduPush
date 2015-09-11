@@ -85,15 +85,34 @@ static do_BaiduPush_App * instance;
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [self fireEvent:userInfo];
+    [self fireMessage:userInfo];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    [self fireEvent:userInfo];
+    [self fireMessage:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
 }
-
+//收到推送触发
+- (void)fireMessage:(NSDictionary *)messageDict
+{
+    do_BaiduPush_SM *baidu = (do_BaiduPush_SM*)[doScriptEngineHelper ParseSingletonModule:nil :@"do_BaiduPush" ];
+    NSString *message = [[messageDict objectForKey:@"aps"] objectForKey:@"alert"];
+    NSMutableDictionary *customDict = [NSMutableDictionary dictionary];
+    for (NSString *infoKey in messageDict) {
+        if (![infoKey isEqualToString:@"aps"]) {
+            [customDict setValue:[messageDict valueForKey:infoKey] forKey:infoKey];
+        }
+    }
+    NSString *customContent = [doJsonHelper ExportToText:customDict :YES];
+    NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
+    [resultDict setObject:message forKey:@"message"];
+    [resultDict setObject:customContent forKey:@"customContent"];
+    doInvokeResult *resul = [[doInvokeResult alloc]init];
+    [resul SetResultNode:resultDict];
+    [baidu.EventCenter FireEvent:@"notificationClicked" :resul];
+}
+//点击推送触发
 - (void)fireEvent:(NSDictionary *)userInfo
 {
     UIApplicationState appState = [UIApplication sharedApplication].applicationState;
