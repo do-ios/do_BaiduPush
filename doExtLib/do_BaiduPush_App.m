@@ -110,7 +110,7 @@ static do_BaiduPush_App * instance;
     [resultDict setObject:customContent forKey:@"customContent"];
     doInvokeResult *resul = [[doInvokeResult alloc]init];
     [resul SetResultNode:resultDict];
-    [baidu.EventCenter FireEvent:@"notificationClicked" :resul];
+    [baidu.EventCenter FireEvent:@"iOSMessage" :resul];
 }
 //点击推送触发
 - (void)fireEvent:(NSDictionary *)userInfo
