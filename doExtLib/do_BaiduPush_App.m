@@ -85,11 +85,25 @@ static do_BaiduPush_App * instance;
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    if (application.applicationState == UIApplicationStateInactive) {
+        [self fireMessage:userInfo];
+    }
+    else if (application.applicationState == UIApplicationStateActive)
+    {
+        [self fireEvent:userInfo];
+    }
     [self fireMessage:userInfo];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+    if (application.applicationState == UIApplicationStateInactive) {
+        [self fireMessage:userInfo];
+    }
+    else if (application.applicationState == UIApplicationStateActive)
+    {
+        [self fireEvent:userInfo];
+    }
     [self fireMessage:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
 }
@@ -122,9 +136,6 @@ static do_BaiduPush_App * instance;
     do_BaiduPush_SM *baidu = (do_BaiduPush_SM*)[doScriptEngineHelper ParseSingletonModule:nil :@"do_BaiduPush" ];
     doInvokeResult *resul = [[doInvokeResult alloc]init];
     NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
-//    NSDictionary *dicInfo = [[NSBundle mainBundle] infoDictionary];
-//    NSString *strAppName = [dicInfo objectForKey:@"CFBundleDisplayName"];
-//    NSString *title = strAppName;
     NSString *description = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
     NSString *customContent;
     NSMutableDictionary *customDict = [NSMutableDictionary dictionary];

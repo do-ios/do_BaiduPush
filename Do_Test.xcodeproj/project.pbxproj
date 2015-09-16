@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B1BD8591BA92A9B00BA8685 /* libBPush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BB52A2B1B147DDA00C2FC9A /* libBPush.a */; };
 		3B38B2C11B943DB9009A7B5B /* do_BaiduPush_App.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3BB52A1F1B147D4E00C2FC9A /* do_BaiduPush_App.h */; };
 		3B38B2C21B943DB9009A7B5B /* do_BaiduPush_ISM.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3BB52A211B147D4E00C2FC9A /* do_BaiduPush_ISM.h */; };
 		3B38B2C31B943DB9009A7B5B /* do_BaiduPush_SM.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3BB52A221B147D4E00C2FC9A /* do_BaiduPush_SM.h */; };
 		3BB52A241B147D4E00C2FC9A /* do_BaiduPush_App.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB52A201B147D4E00C2FC9A /* do_BaiduPush_App.m */; };
 		3BB52A251B147D4E00C2FC9A /* do_BaiduPush_SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB52A231B147D4E00C2FC9A /* do_BaiduPush_SM.m */; };
-		3BB52A2C1B147DDA00C2FC9A /* libBPush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BB52A2B1B147DDA00C2FC9A /* libBPush.a */; };
 		A44BC6701AEE005E001580AA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BC66F1AEE005E001580AA /* main.m */; };
 		A44BC6731AEE005E001580AA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BC6721AEE005E001580AA /* AppDelegate.m */; };
 		A44BC6761AEE005E001580AA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BC6751AEE005E001580AA /* ViewController.m */; };
@@ -219,7 +219,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3BB52A2C1B147DDA00C2FC9A /* libBPush.a in Frameworks */,
+				3B1BD8591BA92A9B00BA8685 /* libBPush.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
