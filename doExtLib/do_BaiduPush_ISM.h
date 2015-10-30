@@ -14,5 +14,7 @@
 @required
 - (void)startWork:(NSArray *)parms;
 - (void)stopWork:(NSArray *)parms;
+- (void)setIconBadgeNumber:(NSArray *)parms;
+- (void)getIconBadgeNumber:(NSArray *)parms;
 
 @end

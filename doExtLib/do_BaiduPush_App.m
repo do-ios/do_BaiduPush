@@ -13,6 +13,7 @@
 #import "doServiceContainer.h"
 #import "doIModuleExtManage.h"
 #import "doJsonHelper.h"
+#import "doDefines.h"
 
 static do_BaiduPush_App * instance;
 @implementation do_BaiduPush_App
@@ -26,8 +27,8 @@ static do_BaiduPush_App * instance;
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // iOS8 下需要使用新的 API
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+    // iOS8 以上需要使用新的 API
+    if (IOS_8) {
         UIUserNotificationType myTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
         
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
