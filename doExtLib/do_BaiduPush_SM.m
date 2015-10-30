@@ -68,12 +68,6 @@
 }
 - (void)setIconBadgeNumber:(NSArray *)parms
 {
-    if(IOS_8){
-        UIUserNotificationType myTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
-        
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
-        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-    }
     NSDictionary * _dictParas = [parms objectAtIndex:0];
     NSInteger quantity = [[_dictParas objectForKey:@"quantity"] integerValue];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:quantity];
