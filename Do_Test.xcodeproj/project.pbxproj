@@ -13,6 +13,8 @@
 		3B38B2C31B943DB9009A7B5B /* do_BaiduPush_SM.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3BB52A221B147D4E00C2FC9A /* do_BaiduPush_SM.h */; };
 		3BB52A241B147D4E00C2FC9A /* do_BaiduPush_App.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB52A201B147D4E00C2FC9A /* do_BaiduPush_App.m */; };
 		3BB52A251B147D4E00C2FC9A /* do_BaiduPush_SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB52A231B147D4E00C2FC9A /* do_BaiduPush_SM.m */; };
+		774592961BE35F3B0078CC8B /* BaiduPush.plist in Resources */ = {isa = PBXBuildFile; fileRef = 774592951BE35F3B0078CC8B /* BaiduPush.plist */; };
+		774592971BE35F5F0078CC8B /* BaiduPush.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 774592951BE35F3B0078CC8B /* BaiduPush.plist */; };
 		A44BC6701AEE005E001580AA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BC66F1AEE005E001580AA /* main.m */; };
 		A44BC6731AEE005E001580AA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BC6721AEE005E001580AA /* AppDelegate.m */; };
 		A44BC6761AEE005E001580AA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BC6751AEE005E001580AA /* ViewController.m */; };
@@ -62,6 +64,7 @@
 				3B38B2C11B943DB9009A7B5B /* do_BaiduPush_App.h in CopyFiles */,
 				3B38B2C21B943DB9009A7B5B /* do_BaiduPush_ISM.h in CopyFiles */,
 				3B38B2C31B943DB9009A7B5B /* do_BaiduPush_SM.h in CopyFiles */,
+				774592971BE35F5F0078CC8B /* BaiduPush.plist in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +78,7 @@
 		3BB52A231B147D4E00C2FC9A /* do_BaiduPush_SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = do_BaiduPush_SM.m; sourceTree = "<group>"; };
 		3BB52A271B147DDA00C2FC9A /* BPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPush.h; sourceTree = "<group>"; };
 		3BB52A2B1B147DDA00C2FC9A /* libBPush.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBPush.a; sourceTree = "<group>"; };
+		774592951BE35F3B0078CC8B /* BaiduPush.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BaiduPush.plist; sourceTree = "<group>"; };
 		A44BC66A1AEE005E001580AA /* Do_Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Do_Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A44BC66E1AEE005E001580AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A44BC66F1AEE005E001580AA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -318,6 +322,7 @@
 		A44BC7B31AEE19CD001580AA /* doExtLib */ = {
 			isa = PBXGroup;
 			children = (
+				774592951BE35F3B0078CC8B /* BaiduPush.plist */,
 				3BB52A1F1B147D4E00C2FC9A /* do_BaiduPush_App.h */,
 				3BB52A201B147D4E00C2FC9A /* do_BaiduPush_App.m */,
 				3BB52A211B147D4E00C2FC9A /* do_BaiduPush_ISM.h */,
@@ -498,6 +503,7 @@
 			files = (
 				A4A1A01D1AF0F83700D835A5 /* do_Test.json in Resources */,
 				A44BC67B1AEE005E001580AA /* Images.xcassets in Resources */,
+				774592961BE35F3B0078CC8B /* BaiduPush.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
