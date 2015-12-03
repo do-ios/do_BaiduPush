@@ -38,7 +38,7 @@ static do_BaiduPush_App * instance;
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
     }
     NSString *baiduKey = [[doServiceContainer Instance].ModuleExtManage GetThirdAppKey:@"BaiduPush.plist" :@"BaiduPushKey"];
-    [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeProduction isDebug:NO];
+    [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeDevelopment isDebug:YES];
     NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (userInfo) {
         [BPush handleNotification:userInfo];
@@ -87,25 +87,23 @@ static do_BaiduPush_App * instance;
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     if (application.applicationState == UIApplicationStateInactive) {
-        [self fireMessage:userInfo];
+        [self fireEvent:userInfo];
     }
     else if (application.applicationState == UIApplicationStateActive)
     {
-        [self fireEvent:userInfo];
+        [self fireMessage:userInfo];
     }
-    [self fireMessage:userInfo];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     if (application.applicationState == UIApplicationStateInactive) {
-        [self fireMessage:userInfo];
+        [self fireEvent:userInfo];
     }
     else if (application.applicationState == UIApplicationStateActive)
     {
-        [self fireEvent:userInfo];
+        [self fireMessage:userInfo];
     }
-    [self fireMessage:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
 }
 //收到推送触发
