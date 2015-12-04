@@ -38,7 +38,7 @@ static do_BaiduPush_App * instance;
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
     }
     NSString *baiduKey = [[doServiceContainer Instance].ModuleExtManage GetThirdAppKey:@"BaiduPush.plist" :@"BaiduPushKey"];
-    [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeDevelopment isDebug:YES];
+    [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeProduction isDebug:NO];
     NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (userInfo) {
         [BPush handleNotification:userInfo];
