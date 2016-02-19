@@ -24,5 +24,7 @@
 - (NSString *) GetFileFullPathByName: (NSString *)_fileName;
 //释放资源
 - (void) Dispose;
+//清除缓存
+- (void)clear;
 
 @end

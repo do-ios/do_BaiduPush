@@ -27,6 +27,7 @@
 + (NSString*)URLDecodedString:(NSString*)str;
 +(void) DirectoryCopy:(NSString*) _srcDir :(NSString*) _targetDir;
 +(void) FileCopy:(NSString*) _srcFile :(NSString*)_targetFile;
-+(void) EncryptFile:(NSString*) _fileFullName :(NSString*) _fileData;
-+ (NSString*) DecryptFile:(NSString*) _fileFullName;
++(void) EncryptFile:(NSString*) _fileFullName :(NSString*) _fileData :(NSString*)_key;
++ (NSData *) DecryptFile:(NSString*) _fileFullName :(NSString*)_key;
++(NSData *) DecryptUIFile:(NSString*)_fileFullName :(NSString*)_key;
 @end

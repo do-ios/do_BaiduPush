@@ -14,6 +14,8 @@
 #import "doIModuleExtManage.h"
 #import "doJsonHelper.h"
 #import "doDefines.h"
+#import "doServiceContainer.h"
+#import "doIAppSecurity.h"
 
 static do_BaiduPush_App * instance;
 @implementation do_BaiduPush_App
@@ -38,7 +40,14 @@ static do_BaiduPush_App * instance;
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
     }
     NSString *baiduKey = [[doServiceContainer Instance].ModuleExtManage GetThirdAppKey:@"BaiduPush.plist" :@"BaiduPushKey"];
-    [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeProduction isDebug:NO];
+    id<doIAppSecurity> appInfo = [doServiceContainer Instance].AppSecurity;
+    if ([appInfo.appVersion isEqualToString:@"single"]) {
+        [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeProduction isDebug:NO];
+    }
+    else
+    {
+        [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeDevelopment isDebug:NO];
+    }
     NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (userInfo) {
         [BPush handleNotification:userInfo];

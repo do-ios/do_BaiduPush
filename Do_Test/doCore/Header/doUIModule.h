@@ -52,5 +52,6 @@
 
 #pragma mark -
 - (void) LoadView;
+- (void) DidLoadView;
 
 @end

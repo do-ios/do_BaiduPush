@@ -17,6 +17,7 @@
 @protocol doIPageFactory;
 @protocol doIMultitonModuleFactory;
 @protocol doIModuleExtManage;
+@protocol doIAppSecurity;
 
 @interface doServiceContainer : NSObject
 
@@ -31,7 +32,7 @@
 @property (nonatomic,strong) id<doIPageViewFactory> PageViewFactory;
 @property (nonatomic,strong) id<doIPageFactory> PageFactory;
 @property (nonatomic,strong) id<doIModuleExtManage> ModuleExtManage;
-
+@property (nonatomic,strong) id<doIAppSecurity> AppSecurity;
 
 #pragma mark -
 + (doServiceContainer *) Instance;

@@ -34,5 +34,6 @@
 - (void)LoadFromFile:(doSourceFile *)_uiFile : (NSString*) _x : (NSString*) _y;
 - (void)LoadFromContent:(NSString *)_content : (NSString*) _x : (NSString*) _y :(NSString*) _filepath;
 - (void) LoadDefalutScriptFile:(NSString *)_filePath;
+- (void) LoadDefalutScriptFile:(NSString *)_filePath :(NSString *)_scriptType;
 -(void) Dispose;
 @end

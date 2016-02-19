@@ -28,8 +28,10 @@
 @property (nonatomic, readonly, strong) id<doIScriptEngine> ScriptEngine;
 @property (nonatomic, readonly, strong) doUIModule* RootView;
 @property (nonatomic, strong) NSString * Data;
-@property (nonatomic, assign) BOOL IsFullScreen;
 @property (nonatomic, strong) NSString * SoftMode;
+@property (nonatomic, strong) NSString * statusBarState;
+@property (nonatomic, assign) double DesignScreenWidth;
+@property (nonatomic, assign) double DesignScreenHeight;
 
 #pragma mark -
 @required
@@ -43,4 +45,5 @@
 -(doMultitonModule*) GetMultitonModuleByAddress:(NSString*) _key;
 -(BOOL) DeleteMultitonModule:(NSString*) _address;
 - (void) Dispose;
+- (void)setDesignScreenResolution:(double)screenWidth :(double)screenHeight;
 @end

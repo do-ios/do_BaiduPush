@@ -33,7 +33,7 @@
 - (void) LoadScripts:(NSString *)_scripts;
 //创建回调任务
 - (doCallBackTask *) CreateCallBackTask:(NSString *)_callBackMethodName;
-
+-(void) CallLoadScriptsAsModel;
 -(void) CallLoadScriptsAsModel:(NSString *)_scripts : (NSString*) libname;
 -(void) CallLoadScriptsAsModelWithPreDefine:(NSString*) uiRootViewAddress :(NSString *)_scripts;
 @end

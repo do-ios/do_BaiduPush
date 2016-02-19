@@ -15,5 +15,5 @@
 #pragma mark -
 //当前所属应用
 @property (nonatomic,weak) id<doIApp> CurrentApp;
-
+- (void) LoadModelFromString: (NSString*) _moduleString;//装载配置
 @end

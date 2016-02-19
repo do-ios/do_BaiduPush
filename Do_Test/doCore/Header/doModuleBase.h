@@ -25,7 +25,7 @@
 
 //protected
 - (void) RegistProperty: (doProperty*) _property;
-- (void) SetPropertyValue: (NSString*) _key : (NSString*) _val;//设置属性值
+- (BOOL) SetPropertyValue: (NSString*) _key : (NSString*) _val;//设置属性值
 - (NSString*) GetPropertyValue: (NSString*) _key;//获取属性值
 - (doProperty*) GetProperty: (NSString*) _key;//获取属性
 -(void) SetProperties: (NSMutableDictionary*) _changedValues;

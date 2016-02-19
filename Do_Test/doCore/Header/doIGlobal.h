@@ -17,12 +17,15 @@
 @property (nonatomic, strong) NSString * DataRootPath;
 @property (nonatomic, assign) double ScreenWidth;
 @property (nonatomic, assign) double ScreenHeight;
+@property (nonatomic, assign) double DesignScreenWidth;
+@property (nonatomic, assign) double DesignScreenHeight;
 @property (nonatomic, readonly, strong) NSString * OSType;//操作系统类型
 @property (nonatomic, readonly, strong) NSString * OSVersion;//操作系统版本
 @property (nonatomic, readonly, strong) NSString * MainAppID;//主应用ID
 @property (nonatomic, readonly, strong) NSString * ScriptType;
 @property (strong, nonatomic) NSString* LaunchType;//启动方式。
 @property (strong, nonatomic) NSString* LaunchData;//被其他启动时带的数据
+//@property (strong, nonatomic) NSMutableDictionary* LaunchData;//被其他启动时带的数据
 
 #pragma mark -
 @required
@@ -30,4 +33,7 @@
 - (id<doIApp>) GetAppByAddress: (NSString *) _key;
 - (void) LoadConfig: (NSString*) _configFileName;
 - (void) ClearAllApps;
+- (void)setToPasteboard:(NSArray*) parms;
+- (NSString *)getFromPasteboard:(NSArray*) parms;
+
 @end

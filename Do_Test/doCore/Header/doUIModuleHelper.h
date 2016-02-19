@@ -31,4 +31,6 @@
 + (CGSize)sizeWithImageData:(UIImage *)image;
 + (NSString *)stringWithUUID;
 +(int)GetDeviceFontSize:(int) _fontSize : (float) xzoom : (float) yzoom;
+
++ (NSString *) GetPlatformString;
 @end

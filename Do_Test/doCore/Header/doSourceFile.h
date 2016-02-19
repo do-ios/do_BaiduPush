@@ -17,7 +17,7 @@
 @property(strong,nonatomic,readonly) NSString *TxtContent;
 @property(strong,nonatomic,readonly) id<doISourceFS> SourceFS;
 @property(strong,nonatomic,readonly)NSString * FileFullName;
-@property (strong,nonatomic)NSData * BinaryContent;
+@property (strong,nonatomic) NSData *BinaryContent;
 
 
 #pragma mark -
