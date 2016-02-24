@@ -41,12 +41,12 @@ static do_BaiduPush_App * instance;
     }
     NSString *baiduKey = [[doServiceContainer Instance].ModuleExtManage GetThirdAppKey:@"BaiduPush.plist" :@"BaiduPushKey"];
     id<doIAppSecurity> appInfo = [doServiceContainer Instance].AppSecurity;
-    if ([appInfo.appVersion isEqualToString:@"single"]) {
-        [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeProduction isDebug:NO];
+    if ([appInfo.appVersion isEqualToString:@"debug"]) {
+        [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeDevelopment isDebug:NO];
     }
     else
     {
-        [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeDevelopment isDebug:NO];
+        [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeProduction isDebug:YES];
     }
     NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (userInfo) {
