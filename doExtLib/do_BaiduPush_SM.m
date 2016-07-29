@@ -81,6 +81,33 @@
 }
 
 //异步
+//异步
+- (void)removeTags:(NSArray *)parms
+{
+    //异步耗时操作，但是不需要启动线程，框架会自动加载一个后台线程处理这个函数
+    NSDictionary *_dictParas = [parms objectAtIndex:0];
+    //参数字典_dictParas
+    self.scriptEngine = [parms objectAtIndex:1];
+    //自己的代码实现
+    NSArray *tags = [doJsonHelper GetOneArray:_dictParas :@"tag"];
+    [BPush delTags:tags];
+    self.callBackName = [parms objectAtIndex:2];
+    //回调函数名_callbackName
+}
+- (void)setTags:(NSArray *)parms
+{
+    //异步耗时操作，但是不需要启动线程，框架会自动加载一个后台线程处理这个函数
+    NSDictionary *_dictParas = [parms objectAtIndex:0];
+    //参数字典_dictParas
+    self.scriptEngine = [parms objectAtIndex:1];
+    //自己的代码实现
+    NSArray *tags = [doJsonHelper GetOneArray:_dictParas :@"tag"];
+    [BPush setTags:tags];
+    self.callBackName = [parms objectAtIndex:2];
+    //回调函数名_callbackName
+    
+    
+}
 #pragma -mark -
 #pragma -mark BPushDelegate代理方法
 /**
@@ -121,7 +148,24 @@
         [_invokeResult SetResultText:resultStr];
         [self.EventCenter FireEvent:@"unbind" :_invokeResult];
     }
-    
+    else if ([method isEqualToString:BPushRequestMethodSetTag])
+    {
+        doInvokeResult *invoke = [[doInvokeResult alloc]init:self.UniqueKey];
+        [invoke SetResultBoolean:YES];
+        if ([data.allKeys containsObject:BPushRequestErrorCodeKey]) {
+            [invoke SetResultBoolean:NO];
+        }
+        [_scriptEngine Callback:_callBackName :invoke];
+    }
+    else if ([method isEqualToString:BPushRequestMethodDelTag])
+    {
+        doInvokeResult *invoke = [[doInvokeResult alloc]init:self.UniqueKey];
+        [invoke SetResultBoolean:YES];
+        if ([data.allKeys containsObject:BPushRequestErrorCodeKey]) {
+            [invoke SetResultBoolean:NO];
+        }
+        [_scriptEngine Callback:_callBackName :invoke];
+    }
 }
 
 @end

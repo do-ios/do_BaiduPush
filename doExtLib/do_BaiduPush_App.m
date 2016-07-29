@@ -46,7 +46,7 @@ static do_BaiduPush_App * instance;
     }
     else
     {
-        [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeProduction isDebug:YES];
+        [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeProduction isDebug:NO];
     }
     NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (userInfo) {
@@ -130,7 +130,7 @@ static do_BaiduPush_App * instance;
     NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
     [resultDict setObject:message forKey:@"message"];
     [resultDict setObject:customContent forKey:@"customContent"];
-    doInvokeResult *resul = [[doInvokeResult alloc]init];
+    doInvokeResult *resul = [[doInvokeResult alloc]init:baidu.UniqueKey];
     [resul SetResultNode:resultDict];
     [baidu.EventCenter FireEvent:@"iOSMessage" :resul];
 }
