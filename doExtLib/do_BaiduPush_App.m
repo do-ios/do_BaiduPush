@@ -42,11 +42,11 @@ static do_BaiduPush_App * instance;
     NSString *baiduKey = [[doServiceContainer Instance].ModuleExtManage GetThirdAppKey:@"BaiduPush.plist" :@"BaiduPushKey"];
     id<doIAppSecurity> appInfo = [doServiceContainer Instance].AppSecurity;
     if ([appInfo.appVersion isEqualToString:@"debug"]) {
-        [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeDevelopment isDebug:NO];
+        [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeDevelopment withFirstAction:nil withSecondAction:nil withCategory:nil useBehaviorTextInput:nil isDebug:NO];
     }
     else
     {
-        [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeProduction isDebug:NO];
+        [BPush registerChannel:launchOptions apiKey:baiduKey pushMode:BPushModeProduction withFirstAction:nil withSecondAction:nil withCategory:nil useBehaviorTextInput:nil isDebug:NO];
     }
     NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (userInfo) {
@@ -126,7 +126,7 @@ static do_BaiduPush_App * instance;
             [customDict setValue:[messageDict valueForKey:infoKey] forKey:infoKey];
         }
     }
-    NSString *customContent = [doJsonHelper ExportToText:customDict :YES];
+    NSString *customContent = [doJsonHelper ExportToText:customDict :NO];
     NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
     [resultDict setObject:message forKey:@"message"];
     [resultDict setObject:customContent forKey:@"customContent"];
@@ -152,13 +152,13 @@ static do_BaiduPush_App * instance;
             [customDict setValue:[userInfo valueForKey:infoKey] forKey:infoKey];
         }
     }
-    customContent = [doJsonHelper ExportToText:customDict :YES];
+    customContent = [doJsonHelper ExportToText:customDict :NO];
     [resultDict setValue:@"" forKey:@"title"];
     [resultDict setValue:description forKey:@"description"];
     if (customContent.length > 0) {
         [resultDict setValue:customContent forKey:@"customContent"];
     }
-    customContent = [doJsonHelper ExportToText:resultDict :YES];
+    customContent = [doJsonHelper ExportToText:resultDict :NO];
     [resul SetResultText:customContent];
     [baidu.EventCenter FireEvent:@"notificationClicked" :resul];
 }

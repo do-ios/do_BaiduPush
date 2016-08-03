@@ -17,10 +17,7 @@
 #import "doJsonHelper.h"
 #import "doDefines.h"
 
-@interface do_BaiduPush_SM ()<BPushDelegate>
-@property (nonatomic,strong) doInvokeResult *invokeResult;
-@property (nonatomic,copy) NSString *callBackName;
-@property (nonatomic,weak) id<doIScriptEngine> scriptEngine;
+@interface do_BaiduPush_SM ()
 @end
 @implementation do_BaiduPush_SM
 #pragma mark -
@@ -55,16 +52,38 @@
 //同步
 - (void)startWork:(NSArray *)parms
 {
-    [BPush setDelegate:self];
-    _invokeResult = [parms objectAtIndex:2];
     //自己的代码实现
-    [BPush bindChannel];
+    [BPush bindChannelWithCompleteHandler:^(id result, NSError *error) {
+        doInvokeResult *invoke = [[doInvokeResult alloc]init:self.UniqueKey];
+        NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
+        
+        [resultDict setValue:[result valueForKey:BPushRequestAppIdKey] forKey:@"appId"];
+        [resultDict setValue:[result valueForKey:BPushRequestChannelIdKey] forKey:@"channelId"];
+        [resultDict setValue:[result valueForKey:BPushRequestUserIdKey] forKey:@"userId"];
+        [resultDict setValue:[result valueForKey:BPushRequestErrorCodeKey] forKey:@"errorCode"];
+        NSString *resultStr = [doJsonHelper ExportToText:resultDict :NO];
+        [invoke SetResultText:resultStr];
+        [self.EventCenter FireEvent:@"bind" :invoke];
+    }];
 }
 - (void)stopWork:(NSArray *)parms
 {
-    _invokeResult = [parms objectAtIndex:2];
     //自己的代码实现
-    [BPush unbindChannel];
+    [BPush unbindChannelWithCompleteHandler:^(id result, NSError *error) {
+        doInvokeResult *invoke = [[doInvokeResult alloc]init:self.UniqueKey];
+        NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
+        long errorStr = (long)[result valueForKey:@"errorCode"];
+        if (errorStr == 0) {
+            [resultDict setValue:@"0" forKey:@"errorCode"];
+        }
+        else
+        {
+            [resultDict setValue:[result valueForKey:BPushRequestErrorCodeKey] forKey:@"errorCode"];
+        }
+        NSString *resultStr = [doJsonHelper ExportToText:resultDict :YES];
+        [invoke SetResultText:resultStr];
+        [self.EventCenter FireEvent:@"unbind" :invoke];
+    }];
 }
 - (void)setIconBadgeNumber:(NSArray *)parms
 {
@@ -76,7 +95,7 @@
 - (void)getIconBadgeNumber:(NSArray *)parms
 {
     NSInteger quantity = [UIApplication sharedApplication].applicationIconBadgeNumber;
-    _invokeResult = [parms objectAtIndex:2];
+    doInvokeResult *_invokeResult = [parms objectAtIndex:2];
     [_invokeResult SetResultInteger:(int)quantity];
 }
 
@@ -87,11 +106,23 @@
     //异步耗时操作，但是不需要启动线程，框架会自动加载一个后台线程处理这个函数
     NSDictionary *_dictParas = [parms objectAtIndex:0];
     //参数字典_dictParas
-    self.scriptEngine = [parms objectAtIndex:1];
+    id<doIScriptEngine> _scriptEngine = [parms objectAtIndex:1];
     //自己的代码实现
     NSArray *tags = [doJsonHelper GetOneArray:_dictParas :@"tag"];
-    [BPush delTags:tags];
-    self.callBackName = [parms objectAtIndex:2];
+    [BPush delTags:tags withCompleteHandler:^(id result, NSError *error) {
+        doInvokeResult *invoke = [[doInvokeResult alloc]init:self.UniqueKey];
+        if (error) {
+            [invoke SetResultBoolean:NO];
+        }
+        else
+        {
+            [invoke SetResultBoolean:YES];
+        }
+        [self.EventCenter FireEvent:@"setTagsResult" :invoke];
+    }];
+    doInvokeResult *result = [[doInvokeResult alloc]init:self.UniqueKey];
+    NSString  *_callBackName = [parms objectAtIndex:2];
+    [_scriptEngine Callback:_callBackName :result];
     //回调函数名_callbackName
 }
 - (void)setTags:(NSArray *)parms
@@ -99,14 +130,23 @@
     //异步耗时操作，但是不需要启动线程，框架会自动加载一个后台线程处理这个函数
     NSDictionary *_dictParas = [parms objectAtIndex:0];
     //参数字典_dictParas
-    self.scriptEngine = [parms objectAtIndex:1];
+    id<doIScriptEngine> _scriptEngine = [parms objectAtIndex:1];
     //自己的代码实现
     NSArray *tags = [doJsonHelper GetOneArray:_dictParas :@"tag"];
-    [BPush setTags:tags];
-    self.callBackName = [parms objectAtIndex:2];
-    //回调函数名_callbackName
-    
-    
+    [BPush setTags:tags withCompleteHandler:^(id result, NSError *error) {
+        doInvokeResult *invoke = [[doInvokeResult alloc]init:self.UniqueKey];
+        if (error) {
+            [invoke SetResultBoolean:NO];
+        }
+        else
+        {
+            [invoke SetResultBoolean:YES];
+        }
+        [self.EventCenter FireEvent:@"removeTagssResult" :invoke];
+    }];
+    NSString  *_callBackName = [parms objectAtIndex:2];
+    doInvokeResult *result = [[doInvokeResult alloc]init:self.UniqueKey];
+    [_scriptEngine Callback:_callBackName :result];
 }
 #pragma -mark -
 #pragma -mark BPushDelegate代理方法
@@ -119,53 +159,53 @@
  *     none
  */
 
-- (void)onMethod:(NSString *)method response:(NSDictionary *)data
-{
-    _invokeResult = [[doInvokeResult alloc]init:self.UniqueKey];
-    NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
-    if ([method isEqualToString:@"bind"]) {
-        [resultDict setValue:[data valueForKey:BPushRequestAppIdKey] forKey:@"appId"];
-        [resultDict setValue:[data valueForKey:BPushRequestChannelIdKey] forKey:@"channelId"];
-        [resultDict setValue:[data valueForKey:BPushRequestUserIdKey] forKey:@"userId"];
-        [resultDict setValue:[data valueForKey:BPushRequestErrorCodeKey] forKey:@"errorCode"];
-        NSString *resultStr = [doJsonHelper ExportToText:resultDict :YES];
-        [_invokeResult SetResultText:resultStr];
-        [self.EventCenter FireEvent:@"bind" :_invokeResult];
-        return;
-    }
-    else if ([method isEqualToString:@"unbind"])
-    {
-        [resultDict removeAllObjects];
-        long errorStr = (long)[data valueForKey:@"errorCode"];
-        if (errorStr == 0) {
-            [resultDict setValue:@"0" forKey:@"errorCode"];
-        }
-        else
-        {
-            [resultDict setValue:[data valueForKey:BPushRequestErrorCodeKey] forKey:@"errorCode"];
-        }
-        NSString *resultStr = [doJsonHelper ExportToText:resultDict :YES];
-        [_invokeResult SetResultText:resultStr];
-        [self.EventCenter FireEvent:@"unbind" :_invokeResult];
-    }
-    else if ([method isEqualToString:BPushRequestMethodSetTag])
-    {
-        doInvokeResult *invoke = [[doInvokeResult alloc]init:self.UniqueKey];
-        [invoke SetResultBoolean:YES];
-        if ([data.allKeys containsObject:BPushRequestErrorCodeKey]) {
-            [invoke SetResultBoolean:NO];
-        }
-        [_scriptEngine Callback:_callBackName :invoke];
-    }
-    else if ([method isEqualToString:BPushRequestMethodDelTag])
-    {
-        doInvokeResult *invoke = [[doInvokeResult alloc]init:self.UniqueKey];
-        [invoke SetResultBoolean:YES];
-        if ([data.allKeys containsObject:BPushRequestErrorCodeKey]) {
-            [invoke SetResultBoolean:NO];
-        }
-        [_scriptEngine Callback:_callBackName :invoke];
-    }
-}
+//- (void)onMethod:(NSString *)method response:(NSDictionary *)data
+//{
+//    doInvokeResult * _invokeResult = [[doInvokeResult alloc]init:self.UniqueKey];
+//    NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
+//    if ([method isEqualToString:@"bind"]) {
+//        [resultDict setValue:[data valueForKey:BPushRequestAppIdKey] forKey:@"appId"];
+//        [resultDict setValue:[data valueForKey:BPushRequestChannelIdKey] forKey:@"channelId"];
+//        [resultDict setValue:[data valueForKey:BPushRequestUserIdKey] forKey:@"userId"];
+//        [resultDict setValue:[data valueForKey:BPushRequestErrorCodeKey] forKey:@"errorCode"];
+//        NSString *resultStr = [doJsonHelper ExportToText:resultDict :YES];
+//        [_invokeResult SetResultText:resultStr];
+//        [self.EventCenter FireEvent:@"bind" :_invokeResult];
+//        return;
+//    }
+//    else if ([method isEqualToString:@"unbind"])
+//    {
+//        [resultDict removeAllObjects];
+//        long errorStr = (long)[data valueForKey:@"errorCode"];
+//        if (errorStr == 0) {
+//            [resultDict setValue:@"0" forKey:@"errorCode"];
+//        }
+//        else
+//        {
+//            [resultDict setValue:[data valueForKey:BPushRequestErrorCodeKey] forKey:@"errorCode"];
+//        }
+//        NSString *resultStr = [doJsonHelper ExportToText:resultDict :YES];
+//        [_invokeResult SetResultText:resultStr];
+//        [self.EventCenter FireEvent:@"unbind" :_invokeResult];
+//    }
+//    else if ([method isEqualToString:BPushRequestMethodSetTag])
+//    {
+//        doInvokeResult *invoke = [[doInvokeResult alloc]init:self.UniqueKey];
+//        [invoke SetResultBoolean:YES];
+//        if ([data.allKeys containsObject:BPushRequestErrorCodeKey]) {
+//            [invoke SetResultBoolean:NO];
+//        }
+//        [_scriptEngine Callback:_callBackName :invoke];
+//    }
+//    else if ([method isEqualToString:BPushRequestMethodDelTag])
+//    {
+//        doInvokeResult *invoke = [[doInvokeResult alloc]init:self.UniqueKey];
+//        [invoke SetResultBoolean:YES];
+//        if ([data.allKeys containsObject:BPushRequestErrorCodeKey]) {
+//            [invoke SetResultBoolean:NO];
+//        }
+//        [_scriptEngine Callback:_callBackName :invoke];
+//    }
+//}
 
 @end
