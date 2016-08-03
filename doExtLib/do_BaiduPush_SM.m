@@ -118,7 +118,7 @@
         {
             [invoke SetResultBoolean:YES];
         }
-        [self.EventCenter FireEvent:@"setTagsResult" :invoke];
+        [self.EventCenter FireEvent:@"removeTagssResult" :invoke];
     }];
     doInvokeResult *result = [[doInvokeResult alloc]init:self.UniqueKey];
     NSString  *_callBackName = [parms objectAtIndex:2];
@@ -142,7 +142,7 @@
         {
             [invoke SetResultBoolean:YES];
         }
-        [self.EventCenter FireEvent:@"removeTagssResult" :invoke];
+        [self.EventCenter FireEvent:@"setTagsResult" :invoke];
     }];
     NSString  *_callBackName = [parms objectAtIndex:2];
     doInvokeResult *result = [[doInvokeResult alloc]init:self.UniqueKey];
