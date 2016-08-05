@@ -106,7 +106,6 @@
     //异步耗时操作，但是不需要启动线程，框架会自动加载一个后台线程处理这个函数
     NSDictionary *_dictParas = [parms objectAtIndex:0];
     //参数字典_dictParas
-    id<doIScriptEngine> _scriptEngine = [parms objectAtIndex:1];
     //自己的代码实现
     NSArray *tags = [doJsonHelper GetOneArray:_dictParas :@"tag"];
     [BPush delTags:tags withCompleteHandler:^(id result, NSError *error) {
@@ -120,9 +119,6 @@
         }
         [self.EventCenter FireEvent:@"removeTagssResult" :invoke];
     }];
-    doInvokeResult *result = [[doInvokeResult alloc]init:self.UniqueKey];
-    NSString  *_callBackName = [parms objectAtIndex:2];
-    [_scriptEngine Callback:_callBackName :result];
     //回调函数名_callbackName
 }
 - (void)setTags:(NSArray *)parms
@@ -130,10 +126,10 @@
     //异步耗时操作，但是不需要启动线程，框架会自动加载一个后台线程处理这个函数
     NSDictionary *_dictParas = [parms objectAtIndex:0];
     //参数字典_dictParas
-    id<doIScriptEngine> _scriptEngine = [parms objectAtIndex:1];
     //自己的代码实现
     NSArray *tags = [doJsonHelper GetOneArray:_dictParas :@"tag"];
     [BPush setTags:tags withCompleteHandler:^(id result, NSError *error) {
+        NSLog(@"suess = %@",result);
         doInvokeResult *invoke = [[doInvokeResult alloc]init:self.UniqueKey];
         if (error) {
             [invoke SetResultBoolean:NO];
@@ -144,9 +140,6 @@
         }
         [self.EventCenter FireEvent:@"setTagsResult" :invoke];
     }];
-    NSString  *_callBackName = [parms objectAtIndex:2];
-    doInvokeResult *result = [[doInvokeResult alloc]init:self.UniqueKey];
-    [_scriptEngine Callback:_callBackName :result];
 }
 #pragma -mark -
 #pragma -mark BPushDelegate代理方法
